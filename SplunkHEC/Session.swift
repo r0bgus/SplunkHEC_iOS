@@ -50,8 +50,9 @@ class SplunkHEC_Session {
     
     func send_events(events:[String]) {
         let string_payload = events.joined(separator: "\n")
-        splunkHEC_Request.hec_send_events(endpoint: endpoint, data: string_payload) { [weak self] (success,error) in
+        splunkHEC_Request.hec_send_events(endpoint: endpoint, data: string_payload) { (success,error) in
             if success {
+                
             }
             else {
                 print(error!.localizedDescription)

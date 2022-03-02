@@ -48,7 +48,7 @@ public final class SplunkHEC {
         
         splunkHEC_Configs = SplunkHEC_Configs()
 
-        set_hec_token(hec_token:hec_token)
+        _ = set_hec_token(hec_token:hec_token)
         if set_splunk_url(splunk_url: splunk_url) == nil {
             return nil
         }
@@ -66,7 +66,7 @@ public final class SplunkHEC {
         
         self.splunkHEC_Configs = splunkHEC_Configs
 
-        set_hec_token(hec_token:self.splunkHEC_Configs.HEC_Token)
+        _ = set_hec_token(hec_token:self.splunkHEC_Configs.HEC_Token)
         if set_splunk_url(splunk_url: self.splunkHEC_Configs.SplunkHEC_URL) == nil {
             return nil
         }
@@ -86,7 +86,7 @@ public final class SplunkHEC {
     }
     
     private func set_splunk_url(splunk_url:String) -> String? {
-        guard let splunk_url_test = URL(string: splunk_url) else {
+        guard let _ = URL(string: splunk_url) else {
             print(NSError(domain:"SplunkHec:Init Unable to set hec url: \(splunk_url)", code:23).localizedDescription)
             return nil
         }
