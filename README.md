@@ -8,6 +8,12 @@ Send messages directly to Splunk from your iOS apps via HEC
 
 ## Quick Start
 
+Add to your project with cocoapods
+
+```
+pod 'SplunkHEC_iOS', '~> 1.0.0'
+```
+
 Create a config object with your Splunk HEC token and Splunk server url. 
 
 ```swift
