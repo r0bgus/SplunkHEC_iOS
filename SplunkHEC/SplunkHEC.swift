@@ -6,13 +6,13 @@
 
 import Foundation
 
-struct SplunkHEC_Configs {
+public struct SplunkHEC_Configs {
     let available_endpoints:[String:String] = ["event":"/services/collector/event","raw":"/services/collector/raw","health":"/services/collector/health"]
     
-    var HEC_Token:String = ""
-    var SplunkHEC_URL:String = ""
-    var enforce_SSL:Bool = true
-    var endpoint:String = "event"
+    public var HEC_Token:String = ""
+    public var SplunkHEC_URL:String = ""
+    public var enforce_SSL:Bool = true
+    public var endpoint:String = "event"
     //log format
     /*
      %timestamp%
@@ -23,14 +23,14 @@ struct SplunkHEC_Configs {
      %function%
      %message%
      */
-    var log_format:String = "%timestamp% - %session_id% - [%level%][%file%:%line%][%function%] - %message%"
-    var time_format:String = "yyyy-MM-dd HH:mm:ss.SSS" //how time is displayed for %timestamp%. Note: when using hec event endpoint, a seperate timestamp is passed for indexing, making this timestamp purely cosmetic. When using the raw endpoint, the timestamp is used for line breaking and parsing. 
+    public var log_format:String = "%timestamp% - %session_id% - [%level%][%file%:%line%][%function%] - %message%"
+    public var time_format:String = "yyyy-MM-dd HH:mm:ss.SSS" //how time is displayed for %timestamp%. Note: when using hec event endpoint, a seperate timestamp is passed for indexing, making this timestamp purely cosmetic. When using the raw endpoint, the timestamp is used for line breaking and parsing.
     
     //batch configs
-    var splunkHEC_Batch_Configs:SplunkHEC_Batch_Configs = SplunkHEC_Batch_Configs()
+    public var splunkHEC_Batch_Configs:SplunkHEC_Batch_Configs = SplunkHEC_Batch_Configs()
     
     //static fields
-    var static_fields:SplunkHEC_Fields = SplunkHEC_Fields()
+    public var static_fields:SplunkHEC_Fields = SplunkHEC_Fields()
     
     
 }
@@ -40,9 +40,9 @@ public final class SplunkHEC {
     private var splunkHEC_Configs:SplunkHEC_Configs!
     private var splunkHEC_Request:SplunkHEC_Request!
     private var current_splunkHEC_Session:SplunkHEC_Session!
-    var is_init:Bool = false
+    public var is_init:Bool = false
     
-    init?(hec_token:String,
+    public init?(hec_token:String,
           splunk_url:String,
           endpoint:String = "event") {
         
@@ -62,7 +62,7 @@ public final class SplunkHEC {
         
     }
     
-    init?(splunkHEC_Configs: SplunkHEC_Configs) {
+    public init?(splunkHEC_Configs: SplunkHEC_Configs) {
         
         self.splunkHEC_Configs = splunkHEC_Configs
 
@@ -108,7 +108,7 @@ public final class SplunkHEC {
         
     }
     
-    func check_health() -> Bool {
+    public func check_health() -> Bool {
         var healthy:Bool = false
         let wait_for_health = DispatchSemaphore(value: 0)
         
@@ -129,7 +129,7 @@ public final class SplunkHEC {
         return healthy
     }
     
-    func start_session() -> SplunkHEC_Session? {
+    public func start_session() -> SplunkHEC_Session? {
         if current_splunkHEC_Session == nil {
             current_splunkHEC_Session = SplunkHEC_Session(splunkHEC_Configs: splunkHEC_Configs, splunkHEC_Request: splunkHEC_Request)
             current_splunkHEC_Session.start_session()
@@ -142,7 +142,7 @@ public final class SplunkHEC {
         
     }
     
-    func stop_session() -> Bool {
+    public func stop_session() -> Bool {
         if current_splunkHEC_Session != nil {
             if current_splunkHEC_Session.is_active {
                 current_splunkHEC_Session.stop_session()

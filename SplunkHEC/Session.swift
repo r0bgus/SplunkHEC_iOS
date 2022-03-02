@@ -7,17 +7,17 @@
 
 import Foundation
 
-class SplunkHEC_Session {
+public class SplunkHEC_Session {
     
-    let session_id:String
-    var is_active:Bool = false
+    public let session_id:String
+    public var is_active:Bool = false
     private let splunkHEC_Batch:SplunkHEC_Batch
     private var splunkHEC_Configs:SplunkHEC_Configs!
     private var splunkHEC_Request:SplunkHEC_Request
     private let endpoint:String
     private let static_fields:SplunkHEC_Fields!
     
-    let Log:SplunkHEC_Log
+    public let Log:SplunkHEC_Log
     
     init(splunkHEC_Configs:SplunkHEC_Configs, splunkHEC_Request: SplunkHEC_Request) {
         self.splunkHEC_Configs = splunkHEC_Configs
