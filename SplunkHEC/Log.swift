@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SplunkHEC_Log {
+public class SplunkHEC_Log {
     
     private let string_format:String
     private let time_format:String
@@ -35,7 +35,7 @@ class SplunkHEC_Log {
         is_session_set = true
     }
     
-    func system_info(level:String="DEBUG",
+    public func system_info(level:String="DEBUG",
                      date:Date = Date(),
                      file:String = #file,
                      function:String = #function,
@@ -48,7 +48,7 @@ class SplunkHEC_Log {
 
     }
     
-    func info(message:[String:Any],
+    public func info(message:[String:Any],
               date:Date = Date(),
               file:String = #file,
               function:String = #function,
@@ -59,7 +59,7 @@ class SplunkHEC_Log {
         event(message: kv_message, level: "INFO", date: date, file: file, function: function, line: line)
         
     }
-    func i(message:[String:Any],
+    public func i(message:[String:Any],
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -70,7 +70,7 @@ class SplunkHEC_Log {
         
     }
     
-    func info(message:String,
+    public func info(message:String,
               date:Date = Date(),
               file:String = #file,
               function:String = #function,
@@ -80,7 +80,7 @@ class SplunkHEC_Log {
         event(message: message, level: "INFO", date: date, file: file, function: function, line: line)
         
     }
-    func i(message:String,
+    public func i(message:String,
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -91,7 +91,7 @@ class SplunkHEC_Log {
         
     }
     
-    func warn(message:[String:Any],
+    public func warn(message:[String:Any],
                   date:Date = Date(),
                   file:String = #file,
                   function:String = #function,
@@ -102,7 +102,7 @@ class SplunkHEC_Log {
             event(message: kv_message, level: "WARN", date: date, file: file, function: function, line: line)
             
     }
-    func w(message:[String:Any],
+    public func w(message:[String:Any],
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -113,7 +113,7 @@ class SplunkHEC_Log {
         
     }
     
-    func warn(message:String,
+    public func warn(message:String,
               date:Date = Date(),
               file:String = #file,
               function:String = #function,
@@ -123,7 +123,7 @@ class SplunkHEC_Log {
         event(message: message, level: "WARN", date: date, file: file, function: function, line: line)
         
     }
-    func w(message:String,
+    public func w(message:String,
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -133,7 +133,7 @@ class SplunkHEC_Log {
         warn(message: message, date: date, file: file, function: function, line: line)
         
     }
-    func error(message:[String:Any],
+    public func error(message:[String:Any],
                   date:Date = Date(),
                   file:String = #file,
                   function:String = #function,
@@ -144,7 +144,7 @@ class SplunkHEC_Log {
             event(message: kv_message, level: "ERROR", date: date, file: file, function: function, line: line)
             
     }
-    func e(message:[String:Any],
+    public func e(message:[String:Any],
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -155,7 +155,7 @@ class SplunkHEC_Log {
         
     }
     
-    func error(message:String,
+    public func error(message:String,
               date:Date = Date(),
               file:String = #file,
               function:String = #function,
@@ -165,7 +165,7 @@ class SplunkHEC_Log {
         event(message: message, level: "ERROR", date: date, file: file, function: function, line: line)
         
     }
-    func e(message:String,
+    public func e(message:String,
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -176,7 +176,7 @@ class SplunkHEC_Log {
         
     }
     
-    func fatal(message:[String:Any],
+    public func fatal(message:[String:Any],
                   date:Date = Date(),
                   file:String = #file,
                   function:String = #function,
@@ -187,7 +187,7 @@ class SplunkHEC_Log {
             event(message: kv_message, level: "FATAL", date: date, file: file, function: function, line: line)
             
     }
-    func f(message:[String:Any],
+    public func f(message:[String:Any],
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -198,7 +198,7 @@ class SplunkHEC_Log {
         
     }
     
-    func fatal(message:String,
+    public func fatal(message:String,
               date:Date = Date(),
               file:String = #file,
               function:String = #function,
@@ -208,7 +208,7 @@ class SplunkHEC_Log {
         event(message: message, level: "FATAL", date: date, file: file, function: function, line: line)
         
     }
-    func f(message:String,
+    public func f(message:String,
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -219,7 +219,7 @@ class SplunkHEC_Log {
         
     }
     
-    func debug(message:[String:Any],
+    public func debug(message:[String:Any],
                   date:Date = Date(),
                   file:String = #file,
                   function:String = #function,
@@ -230,7 +230,7 @@ class SplunkHEC_Log {
             event(message: kv_message, level: "DEBUG", date: date, file: file, function: function, line: line)
             
     }
-    func d(message:[String:Any],
+    public func d(message:[String:Any],
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -241,7 +241,7 @@ class SplunkHEC_Log {
         
     }
     
-    func debug(message:String,
+    public func debug(message:String,
               date:Date = Date(),
               file:String = #file,
               function:String = #function,
@@ -251,7 +251,7 @@ class SplunkHEC_Log {
         event(message: message, level: "DEBUG", date: date, file: file, function: function, line: line)
         
     }
-    func d(message:String,
+    public func d(message:String,
            date:Date = Date(),
            file:String = #file,
            function:String = #function,
@@ -263,7 +263,7 @@ class SplunkHEC_Log {
     }
     
     
-    func event(message:[String:Any],
+    public func event(message:[String:Any],
                level:String = "",
                date:Date = Date(),
                file:String = #file,
@@ -277,7 +277,7 @@ class SplunkHEC_Log {
         
     }
     
-    func event(message:String,
+    public func event(message:String,
                level:String = "",
                date:Date = Date(),
                file:String = #file,

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SplunkHEC_Fields {
+public struct SplunkHEC_Fields {
     var host:String = ""
     var source:String = ""
     var sourcetype:String = ""
