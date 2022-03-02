@@ -31,7 +31,7 @@ struct SplunkHEC_Utils {
             }
             else {
                 var escaped_value = value as! String
-                //escaped_value = escaped_value.replacingOccurrences(of: "\"", with: #"\""#)
+                escaped_value = escaped_value.replacingOccurrences(of: "\"", with: #"\""#)
                 completion("\(key_crumb.joined(separator: ":"))=\"\(escaped_value)\"")
             }
             
