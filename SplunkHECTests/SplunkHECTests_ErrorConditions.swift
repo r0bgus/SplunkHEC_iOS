@@ -25,8 +25,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
         var splunk_url = "http://<hec>.badserver.url"
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: hec_token,
-                                SplunkHEC_URL: splunk_url)
+                                hec_token: hec_token,
+                                splunk_URL: splunk_url)
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
             XCTAssertTrue(true)
@@ -42,8 +42,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
         var splunk_url = "http://hec.goodserver.url"
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: hec_token,
-                                SplunkHEC_URL: splunk_url,
+                                hec_token: hec_token,
+                                splunk_URL: splunk_url,
                                 endpoint: "nonexsitent")
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
@@ -58,8 +58,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
     func test_session_alreadyStarted() {
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url
                                 )
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
@@ -83,8 +83,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
     func test_session_notStarted() {
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url
                                 )
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
@@ -107,8 +107,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
     func test_session_logAfterSessionStop() {
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url
                                 )
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
@@ -134,8 +134,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
     func test_payload_unsupportedCharacters() {
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url
                                 )
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {

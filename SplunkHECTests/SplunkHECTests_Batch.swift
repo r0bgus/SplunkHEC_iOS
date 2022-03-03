@@ -16,7 +16,7 @@ class SplunkHECTests_Batch: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         
-        splunkHEC = SplunkHEC(splunkHEC_Configs: SplunkHEC_Configs(HEC_Token: splunkHECTestsConfigs.hec_token, SplunkHEC_URL: splunkHECTestsConfigs.splunk_url, enforce_SSL: false))
+        splunkHEC = SplunkHEC(splunkHEC_Configs: SplunkHEC_Configs(hec_token: splunkHECTestsConfigs.hec_token, splunk_URL: splunkHECTestsConfigs.splunk_url, enforce_SSL: false))
         print("Starting test. Token: \(splunkHECTestsConfigs.hec_token) URL: \(splunkHECTestsConfigs.splunk_url)")
     }
 
@@ -52,7 +52,7 @@ class SplunkHECTests_Batch: XCTestCase {
         let splunkHEC_Log = splunkHEC_Session.Log
         
         for i in stride(from:0,to:numPayloads, by:1) {
-            splunkHEC_Log.i(message: test_logMessage + " size=\(startSize)")
+            splunkHEC_Log.i(message: test_logMessage + " type=batchSize size=\(startSize)")
         }
         sleep(20)
         
@@ -84,7 +84,7 @@ class SplunkHECTests_Batch: XCTestCase {
         let splunkHEC_Log = splunkHEC_Session.Log
         
         for i in stride(from:0,to:numPayloads, by:1) {
-            splunkHEC_Log.i(message: test_logMessage + " i=\(i)")
+            splunkHEC_Log.i(message: test_logMessage + " type=batchEvent i=\(i)")
         }
         sleep(20)
         

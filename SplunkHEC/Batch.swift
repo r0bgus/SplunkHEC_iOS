@@ -8,9 +8,17 @@
 import Foundation
 
 public struct SplunkHEC_Batch_Configs {
-    var milliSeconds_Buffer:Int = 1000 //1 second
-    var bytes_Buffer:Int = 1024 //(1KB)
-    var num_events:Int = 25 //value of 0 or negative disables this value
+    //var milliSeconds_Buffer:Int = 5000 //1 second
+    public var bytes_Buffer:Int!
+    public var num_events:Int!
+    
+    public init(bytes_Buffer:Int = 1024, //1kb
+                num_events:Int = 25 //value of 0 or negative disables this value
+    ) {
+        self.bytes_Buffer = bytes_Buffer
+        self.num_events = num_events
+    }
+    
 }
 
 class SplunkHEC_Batch {

@@ -28,7 +28,7 @@ public class SplunkHEC_Session {
 
         static_fields = self.splunkHEC_Configs.static_fields
         
-        Log = SplunkHEC_Log(string_format: self.splunkHEC_Configs.log_format)
+        Log = SplunkHEC_Log(string_format: self.splunkHEC_Configs.log_format, time_format: self.splunkHEC_Configs.time_format)
         Log.set_session(session: self)
         
     }

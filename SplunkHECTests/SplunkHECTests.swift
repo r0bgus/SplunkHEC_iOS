@@ -16,7 +16,7 @@ class SplunkHECTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         
-        splunkHEC = SplunkHEC(splunkHEC_Configs: SplunkHEC_Configs(HEC_Token: splunkHECTestsConfigs.hec_token, SplunkHEC_URL: splunkHECTestsConfigs.splunk_url, enforce_SSL: false))
+        splunkHEC = SplunkHEC(splunkHEC_Configs: SplunkHEC_Configs(hec_token: splunkHECTestsConfigs.hec_token, splunk_URL: splunkHECTestsConfigs.splunk_url, enforce_SSL: false))
         print("Starting test. Token: \(splunkHECTestsConfigs.hec_token) URL: \(splunkHECTestsConfigs.splunk_url)")
     }
 
@@ -169,8 +169,8 @@ class SplunkHECTests: XCTestCase {
     
     func test_config_logFormat() {
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url,
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
                                 enforce_SSL: false,
                                 log_format:"%timestamp% - [%session_id%] - customFormat %message%")
         
@@ -199,8 +199,8 @@ class SplunkHECTests: XCTestCase {
     func test_config_timeFormat() {
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url,
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
                                 enforce_SSL: false,
                                 time_format:"yyyy-MM-dd HH:mm:ss")
         
@@ -228,10 +228,10 @@ class SplunkHECTests: XCTestCase {
     
     func test_config_rawEndpoint() {
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url,
-                                enforce_SSL: false,
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
                                 endpoint: "raw",
+                                enforce_SSL: false,
                                 static_fields: SplunkHEC_Fields(host: "myiPhone", source: "UnitTests", fields: ["mycustomfield1":"mycustomvalue"]
                                 
                                 ) //static fields shouldn't show up on raw
@@ -261,8 +261,8 @@ class SplunkHECTests: XCTestCase {
     
     func test_config_staticFields() {
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url,
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
                                 enforce_SSL: false,
                                 static_fields: SplunkHEC_Fields(host: "myiPhone", source: "UnitTests", fields: ["mycustomfield1":"mycustomvalue"]
                                 

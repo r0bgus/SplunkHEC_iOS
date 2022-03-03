@@ -23,8 +23,8 @@ class SplunkHECTests_ServerErrorConditions: XCTestCase {
     func test_healthCheck() {
                 
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: splunkHECTestsConfigs.hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url,
+                                hec_token: splunkHECTestsConfigs.hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
                                 enforce_SSL: false)
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
@@ -41,8 +41,8 @@ class SplunkHECTests_ServerErrorConditions: XCTestCase {
         var hec_token = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         
         let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: hec_token,
-                                SplunkHEC_URL: splunkHECTestsConfigs.splunk_url,
+                                hec_token: hec_token,
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
                                 enforce_SSL: false)
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {

@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "SplunkHEC_iOS"
-  spec.version      = "1.0.1"
+  spec.version      = "1.1.0"
   spec.summary      = "Implementation of Splunk HEC for iOS"
 
   spec.description  = <<-DESC
