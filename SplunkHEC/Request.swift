@@ -9,6 +9,8 @@ import Foundation
 
 class SplunkHEC_Request: NSObject, URLSessionDelegate {
     
+    let available_endpoints = SplunkHEC_GlobalSettings().available_endpoints
+    
     private var splunkHEC_Configs:SplunkHEC_Configs!
     
     
@@ -69,16 +71,19 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     
     
     func hec_post(endpoint:String, data:Data, completion: @escaping ([String: Any]?,Int,Error?) -> Void) {
+        
     
-        let Splunk_URL_endpoint = URL(string:splunkHEC_Configs.SplunkHEC_URL + splunkHEC_Configs.available_endpoints[endpoint]!)!
+        let Splunk_URL_endpoint = URL(string:splunkHEC_Configs.splunk_URL + available_endpoints[endpoint]!)!
         
         var hec_post_request = URLRequest(url: Splunk_URL_endpoint)
         
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         
+        print("sending url: \(Splunk_URL_endpoint) with token: \(splunkHEC_Configs.hec_token)")
+        
         //method, header, body
         hec_post_request.httpMethod = "POST"
-        hec_post_request.setValue("Splunk \(splunkHEC_Configs.HEC_Token)", forHTTPHeaderField: "Authorization")
+        hec_post_request.setValue("Splunk \(splunkHEC_Configs.hec_token)", forHTTPHeaderField: "Authorization")
         hec_post_request.httpBody = data
         
         let hec_post_task = session.dataTask(with: hec_post_request) { data, response, error in
@@ -113,7 +118,7 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     
     func hec_get(endpoint:String, completion: @escaping ([String: Any]?,Int,Error?) -> Void) {
         
-        let Splunk_URL_endpoint = URL(string:splunkHEC_Configs.SplunkHEC_URL + splunkHEC_Configs.available_endpoints[endpoint]!)!
+        let Splunk_URL_endpoint = URL(string:splunkHEC_Configs.splunk_URL + available_endpoints[endpoint]!)!
         
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
         

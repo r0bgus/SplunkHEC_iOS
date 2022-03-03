@@ -8,11 +8,25 @@
 import Foundation
 
 public struct SplunkHEC_Fields {
-    var host:String = ""
-    var source:String = ""
-    var sourcetype:String = ""
-    var index:String = ""
-    var fields:[String:String] = [:]
+    public var host:String = ""
+    public var source:String = ""
+    public var sourcetype:String = ""
+    public var index:String = ""
+    public var fields:[String:String] = [:]
+    
+    public init(host:String = "",
+                source:String = "",
+                sourcetype:String = "",
+                index:String = "",
+                fields:[String:String] = [:]
+    ) {
+        self.host = host
+        self.source = source
+        self.sourcetype = sourcetype
+        self.index = index
+        self.fields = fields
+    }
+    
 }
 
 class SplunkHEC_Payload {

@@ -12,8 +12,8 @@ Create a config object with your Splunk HEC token and Splunk server url.
 
 ```swift
 let splunkHEC_Configs = SplunkHEC_Configs(
-                                HEC_Token: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-                                SplunkHEC_URL: "https://http-inputs_mystack.splunkcloud.com"
+                                hec_token: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                                splunk_URL: "https://http-inputs_mystack.splunkcloud.com"
                                 )
 ```
 

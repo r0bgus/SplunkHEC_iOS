@@ -14,7 +14,7 @@ public class SplunkHEC_Log {
     private var session:SplunkHEC_Session!
     private var is_session_set:Bool = false
     
-    init(session:SplunkHEC_Session, string_format:String = SplunkHEC_Configs().log_format, time_format:String = SplunkHEC_Configs().time_format) {
+    init(session:SplunkHEC_Session, string_format:String, time_format:String) {
         
         self.session = session
         self.string_format = string_format
@@ -23,12 +23,13 @@ public class SplunkHEC_Log {
         
     }
     
-    init(string_format:String = SplunkHEC_Configs().log_format, time_format:String = SplunkHEC_Configs().time_format) {
+    init(string_format:String, time_format:String) {
         
         self.string_format = string_format
         self.time_format = time_format
         
     }
+    
     
     func set_session(session:SplunkHEC_Session) {
         self.session = session
