@@ -28,9 +28,7 @@ guard let splunkHEC:SplunkHEC = SplunkHEC(splunkHEC_Configs: splunkHEC_Configs) 
 Start a HEC session 
 
 ```swift
-guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-  return
-}
+splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
 ```
 
 Grab the logging object

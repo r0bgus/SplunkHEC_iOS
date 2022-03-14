@@ -30,7 +30,8 @@ struct SplunkHEC_Utils {
                 _dict2KV(dict: innerDict, key_crumbs: key_crumb, completion: completion)
             }
             else {
-                var escaped_value = value as! String
+                var escaped_value = String(describing: value)
+                
                 escaped_value = escaped_value.replacingOccurrences(of: "\"", with: #"\""#)
                 completion("\(key_crumb.joined(separator: ":"))=\"\(escaped_value)\"")
             }

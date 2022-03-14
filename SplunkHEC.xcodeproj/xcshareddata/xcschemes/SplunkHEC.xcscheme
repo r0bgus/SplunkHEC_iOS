@@ -44,6 +44,15 @@
                <Test
                   Identifier = "SplunkHECTests/test_sendData_batchEventSizeDefault()">
                </Test>
+               <Test
+                  Identifier = "SplunkHECTests_Batch/test_sendData_batchDataSizeDefault()">
+               </Test>
+               <Test
+                  Identifier = "SplunkHECTests_Batch/test_sendData_batchEventSizeDefault()">
+               </Test>
+               <Test
+                  Identifier = "SplunkHECTests_Batch/test_sendData_batchEventTimeDefault()">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>

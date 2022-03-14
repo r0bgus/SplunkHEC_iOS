@@ -138,7 +138,6 @@ public final class SplunkHEC {
             }
             else {
                 healthy = false
-                print(error!.localizedDescription)
             }
             wait_for_health.signal()
         }
@@ -149,16 +148,16 @@ public final class SplunkHEC {
         return healthy
     }
     
-    public func start_session() -> SplunkHEC_Session? {
+    public func start_session() -> SplunkHEC_Session {
         if current_splunkHEC_Session == nil {
             current_splunkHEC_Session = SplunkHEC_Session(splunkHEC_Configs: splunkHEC_Configs, splunkHEC_Request: splunkHEC_Request)
             current_splunkHEC_Session.start_session()
-            return current_splunkHEC_Session
         }
         else {
             print(NSError(domain:"SplunkHec:Session Already started.", code:21).localizedDescription)
-            return nil
+            
         }
+        return current_splunkHEC_Session
         
     }
     

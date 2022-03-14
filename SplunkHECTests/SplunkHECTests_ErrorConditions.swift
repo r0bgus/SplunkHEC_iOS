@@ -28,6 +28,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
                                 hec_token: hec_token,
                                 splunk_URL: splunk_url)
         
+        
+        
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
             XCTAssertTrue(true)
             return
@@ -67,16 +69,10 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(true)
-            return
-        }
-        
-        XCTAssertTrue(false)
+        var splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
+        splunkHEC_Session = splunkHEC_withConfig.start_session()
+        //chekc log for error
+        XCTAssertTrue(true)
         
     }
     
@@ -92,10 +88,8 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
+        
         var session_stopped = splunkHEC_withConfig.stop_session()
         session_stopped = splunkHEC_withConfig.stop_session()
 
@@ -116,10 +110,7 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -135,29 +126,35 @@ class SplunkHECTests_ErrorConditions: XCTestCase {
         
         let splunkHEC_Configs = SplunkHEC_Configs(
                                 hec_token: splunkHECTestsConfigs.hec_token,
-                                splunk_URL: splunkHECTestsConfigs.splunk_url
+                                splunk_URL: splunkHECTestsConfigs.splunk_url,
+                                enforce_SSL: false
                                 )
+        
+        print("Starting test. Token: \(splunkHECTestsConfigs.hec_token) URL: \(splunkHECTestsConfigs.splunk_url)")
         
         guard let splunkHEC_withConfig:SplunkHEC = SplunkHEC(splunkHEC_Configs:splunkHEC_Configs) else {
             XCTAssertTrue(false)
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() 
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
-        let bogusStr = String(
+        var bogusStr = String(
             bytes: [0xD8, 0x00] as [UInt8],
             encoding: String.Encoding.utf16BigEndian)!
         
+        print("Trying bogus str \(bogusStr)")
         splunkHEC_Log.i(message:bogusStr)
         
-        //soft fail. check logs
+        bogusStr = "zap cannon •n"
+        print("Trying bogus str \(bogusStr)")
+        splunkHEC_Log.i(message:bogusStr)
         
+        splunkHEC_withConfig.stop_session()
+        //soft fail. check logs
+        sleep(2)
     }
     
 

@@ -11,13 +11,17 @@ public class SplunkHEC_Session {
     
     public let session_id:String
     public var is_active:Bool = false
+    public let Log:SplunkHEC_Log
+    
     private let splunkHEC_Batch:SplunkHEC_Batch
     private var splunkHEC_Configs:SplunkHEC_Configs!
     private var splunkHEC_Request:SplunkHEC_Request
+    
     private let endpoint:String
     private let static_fields:SplunkHEC_Fields!
     
-    public let Log:SplunkHEC_Log
+    private var batchTimer = Timer()
+    
     
     init(splunkHEC_Configs:SplunkHEC_Configs, splunkHEC_Request: SplunkHEC_Request) {
         self.splunkHEC_Configs = splunkHEC_Configs
@@ -34,18 +38,35 @@ public class SplunkHEC_Session {
     }
     
     func start_session() {
-        
         is_active = true
+        
+        let interval = Double(splunkHEC_Configs.splunkHEC_Batch_Configs.milliSeconds_Buffer)/1000.0
+        
+        DispatchQueue.global(qos: .background).async {
+            self.batchTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true, block:
+            { [weak self] _ in
+                self?.flush_events(from:"timer")
+            })
+            let runLoop = RunLoop.current
+            runLoop.add(self.batchTimer, forMode: RunLoop.Mode.default)
+            runLoop.run()
+        }
+        
+        
+        //RunLoop.main.add(batchTimer, forMode: .common)
     }
     
     func stop_session() {
         is_active = false
+        batchTimer.invalidate()
         flush_events()
     }
     
-    private func flush_events() {
+    private func flush_events(from:String="") {
         let events = splunkHEC_Batch.flush()
-        send_events(events:events)
+        if events.count > 0 {
+            send_events(events:events)
+        }
     }
     
     func send_events(events:[String]) {

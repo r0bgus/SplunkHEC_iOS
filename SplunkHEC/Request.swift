@@ -48,7 +48,8 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     }
     
     func hec_send_events(endpoint:String, data:String, completion: @escaping(Bool, Error?) -> Void) {
-        hec_post(endpoint: endpoint, data: data.data(using: .ascii)!) { (data, status_code, error) in
+        
+        hec_post(endpoint: endpoint, data: data.data(using: .utf8)!) { (data, status_code, error) in
             
             switch status_code {
             case 200:
@@ -59,14 +60,14 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
                     completion(false, NSError(domain:"SplunkHec:POST (\(status_code)) Unknown error", code:13))
                     break
                 }
-                completion(false, NSError(domain:"SplunkHec:POST (\(status_code)) \(hec_text)", code:13))
+                completion(false, NSError(domain:"SplunkHec:POST (\(status_code)) \(hec_text)", code:14))
                 break
             default:
                 completion(false,error)
                 break
             }
+            return
         }
-        
     }
     
     
@@ -78,15 +79,14 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
         var hec_post_request = URLRequest(url: Splunk_URL_endpoint)
         
         let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
-        
-        print("sending url: \(Splunk_URL_endpoint) with token: \(splunkHEC_Configs.hec_token)")
-        
+                
         //method, header, body
         hec_post_request.httpMethod = "POST"
         hec_post_request.setValue("Splunk \(splunkHEC_Configs.hec_token)", forHTTPHeaderField: "Authorization")
         hec_post_request.httpBody = data
         
         let hec_post_task = session.dataTask(with: hec_post_request) { data, response, error in
+
             guard let data = data, error==nil else {
                 completion(nil, 0, NSError(domain:"SplunkHec:POST No data", code: 3))
                 return
@@ -101,14 +101,17 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     completion(json,httpResponse.statusCode, nil)
+                    return
                 }
                 
                 else {
                     completion(nil, 0, NSError(domain: "SplunkHec:POST status code unavailable", code: 5))
+                    return
                 }
                 
             } catch let error {
                 completion(nil, 0, error)
+                return
             }
             
         }
@@ -145,7 +148,6 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
                 }
                 
             } catch let error {
-                print("6")
                 completion(nil, 0, error)
             }
             
@@ -161,12 +163,14 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
         
             if challenge.protectionSpace.serverTrust == nil {
                     completionHandler(.useCredential, nil)
+                    return
             }
             
             else {
                     let trust: SecTrust = challenge.protectionSpace.serverTrust!
                     let credential = URLCredential(trust: trust)
                     completionHandler(.useCredential, credential)
+                    return
             }
             
         }

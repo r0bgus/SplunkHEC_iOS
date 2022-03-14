@@ -8,15 +8,17 @@
 import Foundation
 
 public struct SplunkHEC_Batch_Configs {
-    //var milliSeconds_Buffer:Int = 5000 //1 second
-    public var bytes_Buffer:Int!
-    public var num_events:Int!
+    var milliSeconds_Buffer:Int
+    public var bytes_Buffer:Int
+    public var num_events:Int
     
-    public init(bytes_Buffer:Int = 1024, //1kb
-                num_events:Int = 25 //value of 0 or negative disables this value
+    public init(bytes_Buffer:Int = 512*1024, //.5Mb
+                num_events:Int = 250, //value of 0 or negative disables this value
+                milliSeconds_Buffer:Int = 5000 //5 seconds
     ) {
         self.bytes_Buffer = bytes_Buffer
         self.num_events = num_events
+        self.milliSeconds_Buffer = milliSeconds_Buffer
     }
     
 }
@@ -59,7 +61,7 @@ class SplunkHEC_Batch {
         
     }
     
-    func flush() -> [String] {
+    func flush() -> [String] {        
         let tmp_batch = batch
         batch = []
         curSize = 0

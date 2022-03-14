@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "SplunkHEC_iOS"
-  spec.version      = "1.1.0"
+  spec.version      = "1.2.2"
   spec.summary      = "Implementation of Splunk HEC for iOS"
 
   spec.description  = <<-DESC
@@ -14,7 +14,7 @@ Pod::Spec.new do |spec|
 
   spec.author    = "r0bgus"
 
-  spec.ios.deployment_target = "9.0"
+  spec.ios.deployment_target = "10.0"
   spec.swift_version = "5.5"
 
   spec.source       = { :git => "https://github.com/r0bgus/SplunkHEC_iOS.git", :tag => "#{spec.version}" }

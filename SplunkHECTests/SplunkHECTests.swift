@@ -33,10 +33,7 @@ class SplunkHECTests: XCTestCase {
     
     
     func test_sendData_systemInfos() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC!.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -49,10 +46,7 @@ class SplunkHECTests: XCTestCase {
     }
     
     func test_sendData_infos() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+         let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -70,10 +64,7 @@ class SplunkHECTests: XCTestCase {
     }
     
     func test_sendData_warns() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -90,10 +81,7 @@ class SplunkHECTests: XCTestCase {
     }
     
     func test_sendData_errors() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -110,10 +98,7 @@ class SplunkHECTests: XCTestCase {
     }
     
     func test_sendData_fatals() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -130,10 +115,7 @@ class SplunkHECTests: XCTestCase {
     }
     
     func test_sendData_debugs() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -150,10 +132,7 @@ class SplunkHECTests: XCTestCase {
     }
     
     func test_sendData_generics() {
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -180,11 +159,8 @@ class SplunkHECTests: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
-        
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
+            
         let splunkHEC_Log = splunkHEC_Session.Log
         
         let test_logMessage = UUID().uuidString
@@ -210,10 +186,7 @@ class SplunkHECTests: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -243,10 +216,7 @@ class SplunkHECTests: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         
@@ -274,10 +244,7 @@ class SplunkHECTests: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session()
         
         let splunkHEC_Log = splunkHEC_Session.Log
         

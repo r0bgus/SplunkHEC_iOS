@@ -50,10 +50,7 @@ class SplunkHECTests_ServerErrorConditions: XCTestCase {
             return
         }
         
-        guard let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() else {
-            XCTAssertTrue(false)
-            return
-        }
+        let splunkHEC_Session:SplunkHEC_Session = splunkHEC_withConfig.start_session() 
         
         var splunkHEC_Log = splunkHEC_Session.Log
         
