@@ -62,7 +62,7 @@ splunkHEC_Log.info(message: "Hello Splunk!")
 Send unformatted payloads (no log line wrapping) via `RawData`:
 
 ```swift
-splunkHEC_Session.RawData.event(rawData: "{\"glucose\":120}")
+splunkHEC_Session.RawData.event(rawData: "{\"speed\":120}")
 ```
 
 Close the HEC session
