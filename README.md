@@ -8,11 +8,19 @@ Send messages directly to Splunk from your iOS apps via HEC
 
 ## Quick Start
 
-Add to your project with cocoapods
+Add the package in Xcode with **File > Add Package Dependencies…** and the git URL:
 
 ```
-pod 'SplunkHEC_iOS'
+https://github.com/r0bgus/SplunkHEC_iOS.git
 ```
+
+Or in `Package.swift`:
+
+```swift
+.package(url: "https://github.com/r0bgus/SplunkHEC_iOS.git", from: "1.2.2")
+```
+
+Then `import SplunkHEC`.
 
 Create a config object with your Splunk HEC token and Splunk server url. 
 
@@ -49,6 +57,12 @@ Send messages
 
 ```swift
 splunkHEC_Log.info(message: "Hello Splunk!")
+```
+
+Send unformatted payloads (no log line wrapping) via `RawData`:
+
+```swift
+splunkHEC_Session.RawData.event(rawData: "{\"glucose\":120}")
 ```
 
 Close the HEC session

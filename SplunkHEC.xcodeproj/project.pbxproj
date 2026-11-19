@@ -19,6 +19,7 @@
 		D111204727CD9DE3006E4369 /* Batch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111203F27CD9DE3006E4369 /* Batch.swift */; };
 		D111204827CD9DE3006E4369 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111204027CD9DE3006E4369 /* Session.swift */; };
 		D111204927CD9DE3006E4369 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111204127CD9DE3006E4369 /* Utils.swift */; };
+		D111205327CEDD2F006E4369 /* RawData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111205427CEDD2F006E4369 /* RawData.swift */; };
 		D111204C27CEC548006E4369 /* SplunkHECTests_Batch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111204B27CEC547006E4369 /* SplunkHECTests_Batch.swift */; };
 		D111204E27CEC643006E4369 /* SplunkHECTests_ErrorConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111204D27CEC643006E4369 /* SplunkHECTests_ErrorConditions.swift */; };
 		D111205027CED4FA006E4369 /* SplunkHECTests_ServerErrorConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D111204F27CED4FA006E4369 /* SplunkHECTests_ServerErrorConditions.swift */; };
@@ -49,6 +50,7 @@
 		D111203F27CD9DE3006E4369 /* Batch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Batch.swift; sourceTree = "<group>"; };
 		D111204027CD9DE3006E4369 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		D111204127CD9DE3006E4369 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		D111205427CEDD2F006E4369 /* RawData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawData.swift; sourceTree = "<group>"; };
 		D111204B27CEC547006E4369 /* SplunkHECTests_Batch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplunkHECTests_Batch.swift; sourceTree = "<group>"; };
 		D111204D27CEC643006E4369 /* SplunkHECTests_ErrorConditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplunkHECTests_ErrorConditions.swift; sourceTree = "<group>"; };
 		D111204F27CED4FA006E4369 /* SplunkHECTests_ServerErrorConditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplunkHECTests_ServerErrorConditions.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				D111203F27CD9DE3006E4369 /* Batch.swift */,
 				D111203C27CD9DE2006E4369 /* Log.swift */,
+				D111205427CEDD2F006E4369 /* RawData.swift */,
 				D111203E27CD9DE3006E4369 /* Payload.swift */,
 				D111203D27CD9DE3006E4369 /* Request.swift */,
 				D111204027CD9DE3006E4369 /* Session.swift */,
@@ -238,6 +241,7 @@
 				D111204827CD9DE3006E4369 /* Session.swift in Sources */,
 				D111204527CD9DE3006E4369 /* Request.swift in Sources */,
 				D111204427CD9DE3006E4369 /* Log.swift in Sources */,
+				D111205327CEDD2F006E4369 /* RawData.swift in Sources */,
 				D111204227CD9DE3006E4369 /* SplunkHEC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

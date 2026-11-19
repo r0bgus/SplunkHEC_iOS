@@ -6,7 +6,7 @@
 
 import Foundation
 
-public struct SplunkHEC_Configs {
+public struct SplunkHEC_Configs: Codable, Equatable {
     
     public var hec_token:String
     public var splunk_URL:String
@@ -132,20 +132,20 @@ public final class SplunkHEC {
         var healthy:Bool = false
         let wait_for_health = DispatchSemaphore(value: 0)
         
-        splunkHEC_Request.hec_health() { (success,error) in
-            if success {
-                healthy = true
-            }
-            else {
-                healthy = false
-            }
+        check_health_async { success in
+            healthy = success
             wait_for_health.signal()
         }
         
-
         wait_for_health.wait()
         
         return healthy
+    }
+    
+    public func check_health_async(_ completion: @escaping (Bool) -> Void) {
+        splunkHEC_Request.hec_health { success, _ in
+            completion(success)
+        }
     }
     
     public func start_session() -> SplunkHEC_Session {

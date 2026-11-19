@@ -12,17 +12,24 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     let available_endpoints = SplunkHEC_GlobalSettings().available_endpoints
     
     private var splunkHEC_Configs:SplunkHEC_Configs!
-    
+    private var session: URLSession!
     
     init(splunkHEC_Configs:SplunkHEC_Configs) {
-        
         self.splunkHEC_Configs = splunkHEC_Configs
+        super.init()
         
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.timeoutIntervalForRequest = 15
+        session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+    }
+    
+    deinit {
+        session.finishTasksAndInvalidate()
     }
     
     func hec_health(completion: @escaping (Bool,Error?) -> Void) {
         
-        hec_get(endpoint: "health") { (data, status_code, error) in
+        hec_get(endpoint: "health") { (_, status_code, error) in
             switch status_code {
             case 200:
                 
@@ -41,7 +48,7 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
                 
             default:
                 
-                completion(false,error)
+                completion(false,error ?? NSError(domain:"SplunkHec:Health unknown error", code:16))
                 break
             }
         }
@@ -49,21 +56,25 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     
     func hec_send_events(endpoint:String, data:String, completion: @escaping(Bool, Error?) -> Void) {
         
-        hec_post(endpoint: endpoint, data: data.data(using: .utf8)!) { (data, status_code, error) in
-            
+        guard let body = data.data(using: .utf8) else {
+            completion(false, NSError(domain:"SplunkHec:POST unable to encode payload", code:17))
+            return
+        }
+        
+        hec_post(endpoint: endpoint, data: body) { (data, status_code, error) in
             switch status_code {
             case 200:
                 completion(true,nil)
                 break
             case 400,401,403,500,503:
-                guard let hec_text = data!["text"] else {
+                guard let hec_text = data?["text"] else {
                     completion(false, NSError(domain:"SplunkHec:POST (\(status_code)) Unknown error", code:13))
                     break
                 }
                 completion(false, NSError(domain:"SplunkHec:POST (\(status_code)) \(hec_text)", code:14))
                 break
             default:
-                completion(false,error)
+                completion(false,error ?? NSError(domain:"SplunkHec:POST unknown error", code:19))
                 break
             }
             return
@@ -73,12 +84,12 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     
     func hec_post(endpoint:String, data:Data, completion: @escaping ([String: Any]?,Int,Error?) -> Void) {
         
-    
-        let Splunk_URL_endpoint = URL(string:splunkHEC_Configs.splunk_URL + available_endpoints[endpoint]!)!
+        guard let Splunk_URL_endpoint = hec_endpoint_url(endpoint: endpoint) else {
+            completion(nil, 0, NSError(domain:"SplunkHec:POST invalid endpoint or URL", code: 20))
+            return
+        }
         
         var hec_post_request = URLRequest(url: Splunk_URL_endpoint)
-        
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
                 
         //method, header, body
         hec_post_request.httpMethod = "POST"
@@ -88,7 +99,7 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
         let hec_post_task = session.dataTask(with: hec_post_request) { data, response, error in
 
             guard let data = data, error==nil else {
-                completion(nil, 0, NSError(domain:"SplunkHec:POST No data", code: 3))
+                completion(nil, 0, error ?? NSError(domain:"SplunkHec:POST No data", code: 3))
                 return
             }
             
@@ -121,13 +132,14 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
     
     func hec_get(endpoint:String, completion: @escaping ([String: Any]?,Int,Error?) -> Void) {
         
-        let Splunk_URL_endpoint = URL(string:splunkHEC_Configs.splunk_URL + available_endpoints[endpoint]!)!
-        
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: nil)
+        guard let Splunk_URL_endpoint = hec_endpoint_url(endpoint: endpoint) else {
+            completion(nil, 0, NSError(domain:"SplunkHec:GET invalid endpoint or URL", code: 6))
+            return
+        }
         
         let hec_get_task = session.dataTask(with: Splunk_URL_endpoint) { (data, response, error) in
             guard let data = data else {
-                completion(nil, 0, NSError(domain:"SplunkHec:GET No data", code: 0))
+                completion(nil, 0, error ?? NSError(domain:"SplunkHec:GET No data", code: 0))
                 
                 return
             }
@@ -161,15 +173,14 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
         
         if splunkHEC_Configs.enforce_SSL == false {
         
-            if challenge.protectionSpace.serverTrust == nil {
-                    completionHandler(.useCredential, nil)
+            if let trust = challenge.protectionSpace.serverTrust {
+                    let credential = URLCredential(trust: trust)
+                    completionHandler(.useCredential, credential)
                     return
             }
             
             else {
-                    let trust: SecTrust = challenge.protectionSpace.serverTrust!
-                    let credential = URLCredential(trust: trust)
-                    completionHandler(.useCredential, credential)
+                    completionHandler(.useCredential, nil)
                     return
             }
             
@@ -179,5 +190,11 @@ class SplunkHEC_Request: NSObject, URLSessionDelegate {
         
      }
     
+    private func hec_endpoint_url(endpoint: String) -> URL? {
+        guard let path = available_endpoints[endpoint] else {
+            return nil
+        }
+        return URL(string: splunkHEC_Configs.splunk_URL + path)
+    }
+    
 }
-

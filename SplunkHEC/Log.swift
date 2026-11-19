@@ -11,29 +11,12 @@ public class SplunkHEC_Log {
     
     private let string_format:String
     private let time_format:String
-    private var session:SplunkHEC_Session!
-    private var is_session_set:Bool = false
+    private unowned let session:SplunkHEC_Session
     
     init(session:SplunkHEC_Session, string_format:String, time_format:String) {
-        
         self.session = session
         self.string_format = string_format
         self.time_format = time_format
-        is_session_set = true
-        
-    }
-    
-    init(string_format:String, time_format:String) {
-        
-        self.string_format = string_format
-        self.time_format = time_format
-        
-    }
-    
-    
-    func set_session(session:SplunkHEC_Session) {
-        self.session = session
-        is_session_set = true
     }
     
     public func system_info(level:String="DEBUG",
@@ -286,7 +269,7 @@ public class SplunkHEC_Log {
                line:String = String(#line)
     ) {
         
-        if is_session_set && session.is_active {
+        if session.is_active {
         
             let event_data = [
                 "message": message,

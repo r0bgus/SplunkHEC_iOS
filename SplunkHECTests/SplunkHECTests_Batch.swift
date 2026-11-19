@@ -169,4 +169,91 @@ class SplunkHECTests_Batch: XCTestCase {
         XCTAssertTrue(true)
     }
 
+    func test_batch_concurrentAppendFlushDoesNotGrowUnbounded() {
+        let eventCap = 10
+        let byteCap = 1024
+        let batch = SplunkHEC_Batch(splunkHEC_Batch_Configs: SplunkHEC_Batch_Configs(
+            bytes_Buffer: byteCap,
+            num_events: eventCap,
+            milliSeconds_Buffer: 5000
+        ))
+        let payload = String(repeating: "a", count: 50)
+        let group = DispatchGroup()
+        let resultLock = NSLock()
+        var maxFlushedEvents = 0
+        var maxFlushedBytes = 0
+
+        for i in 0..<200 {
+            group.enter()
+            DispatchQueue.global().async {
+                let flushed = batch.append(payload_string: payload)
+                resultLock.lock()
+                maxFlushedEvents = max(maxFlushedEvents, flushed.count)
+                maxFlushedBytes = max(maxFlushedBytes, flushed.reduce(0) { $0 + $1.utf8.count })
+                resultLock.unlock()
+                group.leave()
+            }
+            if i % 3 == 0 {
+                group.enter()
+                DispatchQueue.global().async {
+                    let flushed = batch.flush()
+                    resultLock.lock()
+                    maxFlushedEvents = max(maxFlushedEvents, flushed.count)
+                    maxFlushedBytes = max(maxFlushedBytes, flushed.reduce(0) { $0 + $1.utf8.count })
+                    resultLock.unlock()
+                    group.leave()
+                }
+            }
+        }
+
+        group.wait()
+        let leftover = batch.flush()
+        XCTAssertLessThanOrEqual(leftover.count, eventCap)
+        XCTAssertLessThanOrEqual(leftover.reduce(0) { $0 + $1.utf8.count }, byteCap)
+        XCTAssertLessThanOrEqual(maxFlushedEvents, eventCap)
+        XCTAssertLessThanOrEqual(maxFlushedBytes, byteCap)
+        XCTAssertEqual(batch.curEvents, 0)
+        XCTAssertEqual(batch.curSize, 0)
+    }
+
+    func test_stop_session_doesNotCrash() {
+        let configs = SplunkHEC_Configs(
+            hec_token: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            splunk_URL: "https://example.invalid",
+            enforce_SSL: true,
+            splunkHEC_Batch_Configs: SplunkHEC_Batch_Configs(milliSeconds_Buffer: 100)
+        )
+        guard let hec = SplunkHEC(splunkHEC_Configs: configs) else {
+            XCTFail("SplunkHEC init failed")
+            return
+        }
+
+        let session = hec.start_session()
+        session.Log.i(message: "in-memory stop test")
+        XCTAssertTrue(hec.stop_session())
+        XCTAssertFalse(hec.stop_session())
+    }
+
+    func test_rawData_eventDoesNotCrash() {
+        let configs = SplunkHEC_Configs(
+            hec_token: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+            splunk_URL: "https://example.invalid",
+            enforce_SSL: true,
+            splunkHEC_Batch_Configs: SplunkHEC_Batch_Configs(milliSeconds_Buffer: 100)
+        )
+        guard let hec = SplunkHEC(splunkHEC_Configs: configs) else {
+            XCTFail("SplunkHEC init failed")
+            return
+        }
+
+        let session = hec.start_session()
+        session.RawData.event(rawData: "{\"glucose\":120}")
+        session.RawData.event(
+            rawData: "{\"glucose\":121}",
+            fields: SplunkHEC_Fields(sourcetype: "glucose")
+        )
+        XCTAssertTrue(hec.stop_session())
+        session.RawData.event(rawData: "after stop")
+    }
+
 }
