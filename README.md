@@ -17,7 +17,7 @@ https://github.com/r0bgus/SplunkHEC_iOS.git
 Or in `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/r0bgus/SplunkHEC_iOS.git", from: "1.2.2")
+.package(url: "https://github.com/r0bgus/SplunkHEC_iOS.git", from: "1.3.0")
 ```
 
 Then `import SplunkHEC`.
